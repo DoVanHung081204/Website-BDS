@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <!-- Nút quay lại trang chủ -->
+  <div style="position: absolute; top: 20px; left: 20px;">
+    <a href="index.html" class="back-home" style="color:#004080; text-decoration:none; font-weight:bold;">
+      <i class='bx bx-home'></i> Trang chủ
+    </a>
+  </div>
+
+  <!-- Bộ chọn ngôn ngữ -->
+  <div style="position: absolute; top: 20px; right: 20px;">
+    <select id="lang-switcher">
+      <option value="en">English</option>
+      <option value="vi">Tiếng Việt</option>
+    </select>
+  </div>
+
+  <div class="wrapper">
+    <!-- Form Login -->
+    <form id="login-form">
+      <h1 id="title">Login</h1>
+      <div class="input-box">
+        <input type="text" id="username" placeholder="Username" required>
+        <i class='bx bx-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" required>
+        <i class='bx bx-lock'></i>
+      </div>
+      <div class="remember-forgot">
+        <label><input type="checkbox" id="remember">Remember me</label>
+        <a href="#" id="forgot">Forgot Password?</a>
+      </div>
+      <button type="submit" class="btn" id="login-btn">Login</button>
+      <div class="register-link">
+        <p id="register-text">Don't have an account? 
+          <a href="#" onclick="showRegisterForm()">Register</a>
+        </p>
+      </div>
+    </form>
+
+    <!-- Form Register (ẩn mặc định) -->
+    <form id="register-form" style="display:none;">
+      <h1 id="reg-title">Register</h1>
+      <div class="input-box">
+        <input type="text" id="reg-username" placeholder="Username" required>
+        <i class='bx bx-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="email" id="reg-email" placeholder="Email" required>
+        <i class='bx bx-envelope'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="reg-password" placeholder="Password" required>
+        <i class='bx bx-lock'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="reg-confirm" placeholder="Confirm Password" required>
+        <i class='bx bx-lock'></i>
+      </div>
+      <button type="submit" class="btn" id="reg-btn">Register</button>
+      <div class="register-link">
+        <p id="login-text">Already have an account? 
+          <a href="#" onclick="showLoginForm()">Login</a>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Chuyển đổi form
+    function showRegisterForm() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "block";
+    }
+    function showLoginForm() {
+      document.getElementById("register-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+    }
+
+    // Xử lý submit login
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Đăng nhập thành công!");
+      window.location.href = "index.html";
+    });
+
+    // Xử lý submit register
+    document.getElementById("register-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Đăng ký thành công!");
+      window.location.href = "index.html";
+    });
+
+    // Dịch ngôn ngữ
+    const translations = {
+      en: {
+        title: "Login",
+        username: "Username",
+        password: "Password",
+        remember: "Remember me",
+        forgot: "Forgot Password?",
+        loginBtn: "Login",
+        registerText: "Don't have an account? <a href='#' onclick='showRegisterForm()'>Register</a>",
+        regTitle: "Register",
+        regUsername: "Username",
+        regEmail: "Email",
+        regPassword: "Password",
+        regConfirm: "Confirm Password",
+        regBtn: "Register",
+        loginText: "Already have an account? <a href='#' onclick='showLoginForm()'>Login</a>"
+      },
+      vi: {
+        title: "Đăng nhập",
+        username: "Tên đăng nhập",
+        password: "Mật khẩu",
+        remember: "Ghi nhớ tôi",
+        forgot: "Quên mật khẩu?",
+        loginBtn: "Đăng nhập",
+        registerText: "Chưa có tài khoản? <a href='#' onclick='showRegisterForm()'>Đăng ký</a>",
+        regTitle: "Đăng ký",
+        regUsername: "Tên đăng nhập",
+        regEmail: "Email",
+        regPassword: "Mật khẩu",
+        regConfirm: "Nhập lại mật khẩu",
+        regBtn: "Đăng ký",
+        loginText: "Đã có tài khoản? <a href='#' onclick='showLoginForm()'>Đăng nhập</a>"
+      }
+    };
+
+    const switcher = document.getElementById("lang-switcher");
+
+    switcher.addEventListener("change", () => {
+      const lang = switcher.value;
+
+      // Login form
+      document.getElementById("title").innerText = translations[lang].title;
+      document.getElementById("username").placeholder = translations[lang].username;
+      document.getElementById("password").placeholder = translations[lang].password;
+      document.querySelector("label").innerHTML = `<input type="checkbox" id="remember"> ${translations[lang].remember}`;
+      document.getElementById("forgot").innerText = translations[lang].forgot;
+      document.getElementById("login-btn").innerText = translations[lang].loginBtn;
+      document.getElementById("register-text").innerHTML = translations[lang].registerText;
+
+      // Register form
+      document.getElementById("reg-title").innerText = translations[lang].regTitle;
+      document.getElementById("reg-username").placeholder = translations[lang].regUsername;
+      document.getElementById("reg-email").placeholder = translations[lang].regEmail;
+      document.getElementById("reg-password").placeholder = translations[lang].regPassword;
+      document.getElementById("reg-confirm").placeholder = translations[lang].regConfirm;
+      document.getElementById("reg-btn").innerText = translations[lang].regBtn;
+      document.getElementById("login-text").innerHTML = translations[lang].loginText;
+    });
+  </script>
+</body>
+</html>
